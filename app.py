@@ -35,7 +35,7 @@ docsearch = PineconeVectorStore.from_existing_index(
 retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k": 3})
 
 chatModel = ChatGroq(
-    model="llama-3.3-70b-versatile",
+    model="qwen/qwen3.6-27b",
     temperature=0,
     api_key=GROQ_API_KEY
 )
@@ -56,14 +56,21 @@ def index():
     return render_template('chat.html')
 
 
+import re
+
 @app.route("/get", methods=["GET", "POST"])
 def chat():
     msg = request.form["msg"]
     input = msg
     print(input)
     response = rag_chain.invoke({"input": msg})
-    print("Response : ", response["answer"])
-    return str(response["answer"])
+    answer = response["answer"]
+
+    # Strip out <think>...</think> reasoning block if present
+    clean_answer = re.sub(r"<think>.*?</think>", "", answer, flags=re.DOTALL).strip()
+
+    print("Response : ", clean_answer)
+    return str(clean_answer)
 
 
 if __name__ == '__main__':

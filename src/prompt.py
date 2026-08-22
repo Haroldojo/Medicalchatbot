@@ -4,6 +4,8 @@ system_prompt = (
     "the question. If you don't know the answer, say that you "
     "don't know. Use three sentences maximum and keep the "
     "answer concise."
-    "\n\n"
+    "Do NOT show your reasoning, thinking steps, or internal notes. "
+    "Output ONLY the final answer, with no extra explanations.\n"
+    "\n"
     "{context}"
 )
