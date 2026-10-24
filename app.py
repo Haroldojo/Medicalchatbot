@@ -35,7 +35,7 @@ docsearch = PineconeVectorStore.from_existing_index(
 retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k": 3})
 
 chatModel = ChatGroq(
-    model="qwen/qwen3.6-27b",
+    model="qwen/qwen3.8-27b",
     temperature=0,
     api_key=GROQ_API_KEY
 )
